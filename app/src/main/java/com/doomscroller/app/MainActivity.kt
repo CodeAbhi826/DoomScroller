@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.switchAutoScroll.setOnCheckedChangeListener { _, isChecked ->
             preferences.isAutoScrollEnabled = isChecked
-            val msg = if (isChecked) "Auto-scroll activated" else "Auto-scroll paused"
+            updateServiceStatusUI(AutoScrollAccessibilityService.isServiceRunning)
+            val msg = if (isChecked) "Auto-advance enabled" else "Auto-advance paused"
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
         }
 
@@ -91,17 +92,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateServiceStatusUI(isActive: Boolean) {
-        if (isActive) {
-            binding.cardStatus.strokeColor = ContextCompat.getColor(this, R.color.card_stroke)
-            binding.layoutStatusBadge.background = ContextCompat.getDrawable(this, R.drawable.bg_status_pill)
-            binding.ivStatusDot.setColorFilter(ContextCompat.getColor(this, R.color.status_green))
-            binding.tvStatusBadge.text = "ACTIVE & MONITORING"
-            binding.tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.status_green))
-            binding.tvStatusTitle.text = getString(R.string.status_active)
-            binding.tvStatusDesc.text = getString(R.string.service_enabled_desc)
-            binding.btnEnableService.visibility = View.GONE
-        } else {
+    private fun updateServiceStatusUI(isServiceConnected: Boolean) {
+        val isA11yEnabled = isServiceConnected || isAccessibilityServiceEnabled()
+        val isAutoScrollOn = preferences.isAutoScrollEnabled
+
+        if (!isA11yEnabled) {
+            // Case 1: Service is disabled in Android settings
             binding.cardStatus.strokeColor = ContextCompat.getColor(this, R.color.status_amber)
             binding.layoutStatusBadge.background = ContextCompat.getDrawable(this, R.drawable.bg_status_pill_amber)
             binding.ivStatusDot.setColorFilter(ContextCompat.getColor(this, R.color.status_amber))
@@ -110,6 +106,26 @@ class MainActivity : AppCompatActivity() {
             binding.tvStatusTitle.text = getString(R.string.status_inactive)
             binding.tvStatusDesc.text = getString(R.string.service_disabled_desc)
             binding.btnEnableService.visibility = View.VISIBLE
+        } else if (!isAutoScrollOn) {
+            // Case 2: Service is connected, but user paused auto-scroll
+            binding.cardStatus.strokeColor = ContextCompat.getColor(this, R.color.card_stroke)
+            binding.layoutStatusBadge.background = ContextCompat.getDrawable(this, R.drawable.bg_status_pill_amber)
+            binding.ivStatusDot.setColorFilter(ContextCompat.getColor(this, R.color.status_amber))
+            binding.tvStatusBadge.text = "PAUSED"
+            binding.tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.status_amber))
+            binding.tvStatusTitle.text = getString(R.string.status_paused)
+            binding.tvStatusDesc.text = getString(R.string.service_paused_desc)
+            binding.btnEnableService.visibility = View.GONE
+        } else {
+            // Case 3: Fully active and monitoring
+            binding.cardStatus.strokeColor = ContextCompat.getColor(this, R.color.card_stroke)
+            binding.layoutStatusBadge.background = ContextCompat.getDrawable(this, R.drawable.bg_status_pill)
+            binding.ivStatusDot.setColorFilter(ContextCompat.getColor(this, R.color.status_green))
+            binding.tvStatusBadge.text = "ACTIVE & MONITORING"
+            binding.tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.status_green))
+            binding.tvStatusTitle.text = getString(R.string.status_active)
+            binding.tvStatusDesc.text = getString(R.string.service_enabled_desc)
+            binding.btnEnableService.visibility = View.GONE
         }
     }
 
