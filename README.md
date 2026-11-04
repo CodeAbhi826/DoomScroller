@@ -12,6 +12,10 @@
 
 Unlike naive timer-based scrollers that rely on fixed delay intervals (e.g., 15s or 30s), **DoomScroller dynamically adapts to arbitrary and uneven clip durations**—whether a Short is 6 seconds, 22 seconds, or 60 seconds long. It detects the precise moment a video concludes and seamlessly dispatches an upward paging gesture.
 
+<p align="center">
+  <img src="assets/dashboard.png" width="320" alt="DoomScroller Dashboard" />
+</p>
+
 ---
 
 ## ⚡ How It Works
