@@ -26,22 +26,22 @@ class GestureEngine(private val service: AccessibilityService) {
             return
         }
 
-        // Add subtle human-like micro-jitter
-        val jitterX = (Random.nextFloat() - 0.5f) * 16f
+        // Fast, authentic thumb flick coordinates tailored for vertical Short paging
+        val jitterX = (Random.nextFloat() - 0.5f) * 12f
         val startX = (width * 0.5f) + jitterX
-        val startY = height * 0.78f
-        val endX = (width * 0.5f) + (jitterX * 0.5f)
+        val startY = height * 0.76f
+        val endX = (width * 0.5f) + (jitterX * 0.4f)
         val endY = height * 0.22f
 
         val swipePath = Path().apply {
             moveTo(startX, startY)
-            // Quadratic bezier for an authentic thumb flick curve
-            val controlX = startX + (Random.nextFloat() - 0.5f) * 20f
+            val controlX = startX + (Random.nextFloat() - 0.5f) * 16f
             val controlY = (startY + endY) * 0.5f
             quadTo(controlX, controlY, endX, endY)
         }
 
-        val duration = Random.nextLong(280, 330)
+        // Snappy duration (160 - 200ms) to ensure instant, crisp page transition
+        val duration = Random.nextLong(160, 200)
         val stroke = GestureDescription.StrokeDescription(swipePath, 0, duration)
         val gesture = GestureDescription.Builder().addStroke(stroke).build()
 
@@ -70,7 +70,7 @@ class GestureEngine(private val service: AccessibilityService) {
 
         if (!dispatched) {
             isDispatching = false
-            Log.e(tag, "dispatchGesture returned false (service may lack canPerformGestures permission)")
+            Log.e(tag, "dispatchGesture returned false")
         }
     }
 }
