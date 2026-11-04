@@ -11,10 +11,10 @@ class GestureEngine(private val service: AccessibilityService) {
     private val tag = "DoomScroller-Gesture"
     private var isDispatching = false
 
-    fun performScrollUp(onComplete: (() -> Unit)? = null) {
+    fun performScrollUp(onComplete: (() -> Unit)? = null): Boolean {
         if (isDispatching) {
             Log.d(tag, "Swipe in progress, skipping duplicate request")
-            return
+            return false
         }
 
         val displayMetrics = service.resources.displayMetrics
@@ -23,30 +23,27 @@ class GestureEngine(private val service: AccessibilityService) {
 
         if (width <= 0f || height <= 0f) {
             Log.w(tag, "Invalid display dimensions: ${width}x${height}")
-            return
+            return false
         }
 
-        // Fast, authentic thumb flick coordinates tailored for vertical Short paging
-        val jitterX = (Random.nextFloat() - 0.5f) * 12f
-        val startX = (width * 0.5f) + jitterX
-        val startY = height * 0.76f
-        val endX = (width * 0.5f) + (jitterX * 0.4f)
-        val endY = height * 0.22f
+        // Straight vertical flick coordinates centered on screen
+        // Start at 75% height and end at 25% height to clear Android 14 gesture navigation bar
+        val x = width * 0.5f
+        val startY = height * 0.75f
+        val endY = height * 0.25f
 
         val swipePath = Path().apply {
-            moveTo(startX, startY)
-            val controlX = startX + (Random.nextFloat() - 0.5f) * 16f
-            val controlY = (startY + endY) * 0.5f
-            quadTo(controlX, controlY, endX, endY)
+            moveTo(x, startY)
+            lineTo(x, endY)
         }
 
-        // Snappy duration (160 - 200ms) to ensure instant, crisp page transition
-        val duration = Random.nextLong(160, 200)
+        // Snappy duration (150 - 180ms) for high-velocity flick with zero gesture cancellation
+        val duration = Random.nextLong(150, 181)
         val stroke = GestureDescription.StrokeDescription(swipePath, 0, duration)
         val gesture = GestureDescription.Builder().addStroke(stroke).build()
 
         isDispatching = true
-        Log.i(tag, "Dispatching upward scroll gesture: (${startX.toInt()}, ${startY.toInt()}) -> (${endX.toInt()}, ${endY.toInt()}) in ${duration}ms")
+        Log.i(tag, "Dispatching upward scroll gesture: (${x.toInt()}, ${startY.toInt()}) -> (${x.toInt()}, ${endY.toInt()}) in ${duration}ms")
 
         val dispatched = service.dispatchGesture(
             gesture,
@@ -72,5 +69,7 @@ class GestureEngine(private val service: AccessibilityService) {
             isDispatching = false
             Log.e(tag, "dispatchGesture returned false")
         }
+
+        return dispatched
     }
 }
