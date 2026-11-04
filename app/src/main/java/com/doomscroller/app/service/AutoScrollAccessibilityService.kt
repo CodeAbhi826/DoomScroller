@@ -2,6 +2,8 @@ package com.doomscroller.app.service
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import com.doomscroller.app.data.AppPreferences
@@ -13,6 +15,19 @@ class AutoScrollAccessibilityService : AccessibilityService() {
     private lateinit var preferences: AppPreferences
     private lateinit var detector: ShortsProgressDetector
     private lateinit var gestureEngine: GestureEngine
+
+    // High-precision live polling ticker (250ms = 4 checks per second)
+    // Ensures real-time tracking of native SurfaceView video playback where YouTube
+    // updates SeekBar TalkBack descriptions without firing continuous View hierarchy events.
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private val liveMonitorRunnable = object : Runnable {
+        override fun run() {
+            if (isServiceRunning) {
+                checkPlaybackAndAutoAdvance()
+                mainHandler.postDelayed(this, 250L)
+            }
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -29,6 +44,23 @@ class AutoScrollAccessibilityService : AccessibilityService() {
         isServiceRunning = true
         notifyStatusChanged()
         Log.i(tag, "DoomScroller Connected to System Accessibility Framework")
+        mainHandler.post(liveMonitorRunnable)
+    }
+
+    private fun checkPlaybackAndAutoAdvance() {
+        try {
+            val rootNode = rootInActiveWindow ?: return
+            val shouldScroll = detector.shouldTriggerScroll(rootNode, null)
+
+            if (shouldScroll) {
+                Log.i(tag, "Video completion detected via live monitor! Triggering upward scroll...")
+                gestureEngine.performScrollUp {
+                    Log.i(tag, "Scroll completed, ready for next video")
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error in live monitor check", e)
+        }
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -55,6 +87,7 @@ class AutoScrollAccessibilityService : AccessibilityService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        mainHandler.removeCallbacks(liveMonitorRunnable)
         isServiceRunning = false
         notifyStatusChanged()
         Log.i(tag, "DoomScroller service destroyed")
