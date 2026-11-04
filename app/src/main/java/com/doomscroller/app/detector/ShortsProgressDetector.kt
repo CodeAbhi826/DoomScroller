@@ -238,6 +238,10 @@ class ShortsProgressDetector(private val preferences: AppPreferences) {
     }
 
     private fun parseNodeProgress(node: AccessibilityNodeInfo): ProgressData? {
+        try {
+            node.refresh()
+        } catch (_: Exception) {}
+
         // Priority 1: Parse live TalkBack / accessibility time descriptions.
         // YouTube Shorts SeekBar continuously updates its contentDescription (e.g. "0 minutes 15 seconds of 0 minutes 22 seconds"),
         // while its rangeInfo.current remains frozen at 0.0f unless manually scrubbed.
@@ -245,6 +249,7 @@ class ShortsProgressDetector(private val preferences: AppPreferences) {
         if (!desc.isNullOrEmpty()) {
             val ratio = parseTimeDescription(desc)
             if (ratio != null) {
+                Log.d(tag, "Parsed progress from desc '$desc': ${(ratio * 100).toInt()}%")
                 return ProgressData(ratio.coerceIn(0f, 1f), isAccurate = true)
             }
         }
@@ -253,6 +258,7 @@ class ShortsProgressDetector(private val preferences: AppPreferences) {
         if (!text.isNullOrEmpty()) {
             val ratio = parseTimeDescription(text)
             if (ratio != null) {
+                Log.d(tag, "Parsed progress from text '$text': ${(ratio * 100).toInt()}%")
                 return ProgressData(ratio.coerceIn(0f, 1f), isAccurate = true)
             }
         }

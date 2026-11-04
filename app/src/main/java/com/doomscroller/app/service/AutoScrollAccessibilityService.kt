@@ -50,6 +50,7 @@ class AutoScrollAccessibilityService : AccessibilityService() {
     private fun checkPlaybackAndAutoAdvance() {
         try {
             val rootNode = rootInActiveWindow ?: return
+            try { rootNode.refresh() } catch (_: Exception) {}
             val shouldScroll = detector.shouldTriggerScroll(rootNode, null)
 
             if (shouldScroll) {

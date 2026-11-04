@@ -1,0 +1,2 @@
+# Python standard library only (Python >= 3.8)
+# No external package dependencies required for standard execution

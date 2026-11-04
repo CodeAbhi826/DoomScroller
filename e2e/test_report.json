@@ -1,0 +1,270 @@
+{
+  "device": "192.168.1.40:5555",
+  "mode": "simulation",
+  "tier": "all",
+  "timestamp": "2026-11-04T08:48:14Z",
+  "duration_sec": 0.038,
+  "total_tests": 32,
+  "passed": 32,
+  "failed": 0,
+  "errors": 0,
+  "overall_status": "PASS",
+  "tests": [
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_10_manual_pause_state_detection",
+      "name": "test_t1_10_manual_pause_state_detection",
+      "doc": "T1.10: Manual pause state (\"Play video\") detection & auto-scroll pause gating.",
+      "status": "PASS",
+      "duration_ms": 12.34,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_11_scope_enforcement_exclusivity",
+      "name": "test_t1_11_scope_enforcement_exclusivity",
+      "doc": "T1.11: Scope enforcement: package filtering strictly limits to com.google.android.youtube.",
+      "status": "PASS",
+      "duration_ms": 0.09,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_12_reel_time_bar_node_discovery",
+      "name": "test_t1_12_reel_time_bar_node_discovery",
+      "doc": "T1.12: Reel time bar node discovery verification in YouTube Shorts hierarchy.",
+      "status": "PASS",
+      "duration_ms": 1.99,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_1_short_clip_playback_detection",
+      "name": "test_t1_1_short_clip_playback_detection",
+      "doc": "T1.1: Short clip (<15s) playback detection and completion trigger.",
+      "status": "PASS",
+      "duration_ms": 1.13,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_2_medium_clip_playback_detection",
+      "name": "test_t1_2_medium_clip_playback_detection",
+      "doc": "T1.2: Medium clip (~30s) playback detection and completion trigger.",
+      "status": "PASS",
+      "duration_ms": 0.78,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_3_long_clip_playback_detection",
+      "name": "test_t1_3_long_clip_playback_detection",
+      "doc": "T1.3: Long clip (~60s) playback detection and completion trigger.",
+      "status": "PASS",
+      "duration_ms": 0.63,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_4_progress_parsing_minutes_and_seconds",
+      "name": "test_t1_4_progress_parsing_minutes_and_seconds",
+      "doc": "T1.4: Progress string parsing with full natural language minutes and seconds.",
+      "status": "PASS",
+      "duration_ms": 0.22,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_5_progress_parsing_seconds_only",
+      "name": "test_t1_5_progress_parsing_seconds_only",
+      "doc": "T1.5: Progress string parsing with seconds only format.",
+      "status": "PASS",
+      "duration_ms": 0.17,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_6_progress_parsing_standard_colon_format",
+      "name": "test_t1_6_progress_parsing_standard_colon_format",
+      "doc": "T1.6: Progress string parsing with standard mm:ss colon syntax.",
+      "status": "PASS",
+      "duration_ms": 0.14,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_7_upward_flick_gesture_dispatch_and_coordinates",
+      "name": "test_t1_7_upward_flick_gesture_dispatch_and_coordinates",
+      "doc": "T1.7: Upward flick gesture injection and verification of coordinate safety on 720x1560 display.",
+      "status": "PASS",
+      "duration_ms": 0.71,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_8_debounce_cooldown_enforcement",
+      "name": "test_t1_8_debounce_cooldown_enforcement",
+      "doc": "T1.8: Debounce cooldown enforcement (disallowing duplicate swipes within 800ms cooldown window).",
+      "status": "PASS",
+      "duration_ms": 0.09,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier1_feature_coverage.TestTier1FeatureCoverage.test_t1_9_comments_drawer_smart_pause",
+      "name": "test_t1_9_comments_drawer_smart_pause",
+      "doc": "T1.9: Comments drawer opening detection & auto-scroll pause gating.",
+      "status": "PASS",
+      "duration_ms": 0.45,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_10_zero_duration_and_boundary_resilience",
+      "name": "test_t2_10_zero_duration_and_boundary_resilience",
+      "doc": "T2.10: Zero duration handling: total_sec <= 0 must be handled without ZeroDivisionError.",
+      "status": "PASS",
+      "duration_ms": 0.17,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_1_very_short_clip_wraparound_detection",
+      "name": "test_t2_1_very_short_clip_wraparound_detection",
+      "doc": "T2.1: Very short clip (<7s) wraparound detection without relying on 65s watchdog.",
+      "status": "PASS",
+      "duration_ms": 0.15,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_2_long_clip_progress_monitoring",
+      "name": "test_t2_2_long_clip_progress_monitoring",
+      "doc": "T2.2: Long clip (>60s) progress monitoring across multiple minutes without premature auto-advance.",
+      "status": "PASS",
+      "duration_ms": 0.14,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_3_loop_wraparound_timing_transition",
+      "name": "test_t2_3_loop_wraparound_timing_transition",
+      "doc": "T2.3: Video looping back to 0-15% after reaching >=80% triggers wraparound completion.",
+      "status": "PASS",
+      "duration_ms": 0.1,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_4_rapid_comments_drawer_toggling",
+      "name": "test_t2_4_rapid_comments_drawer_toggling",
+      "doc": "T2.4: Rapid opening and closing of comments drawer (chattering within 200ms).",
+      "status": "PASS",
+      "duration_ms": 0.26,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_5_comments_open_over_65s_watchdog_freeze",
+      "name": "test_t2_5_comments_open_over_65s_watchdog_freeze",
+      "doc": "T2.5: Comments drawer remaining open longer than 65s without watchdog auto-advancing.",
+      "status": "PASS",
+      "duration_ms": 0.57,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_6_mid_video_manual_pause_freeze",
+      "name": "test_t2_6_mid_video_manual_pause_freeze",
+      "doc": "T2.6: Mid-video manual pause remaining paused indefinitely without triggering auto-scroll.",
+      "status": "PASS",
+      "duration_ms": 0.18,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_7_rapid_consecutive_events_within_debounce_window",
+      "name": "test_t2_7_rapid_consecutive_events_within_debounce_window",
+      "doc": "T2.7: Rapid consecutive events within debounce window (no double swipe injection).",
+      "status": "PASS",
+      "duration_ms": 0.06,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_8_progress_boundary_thresholds",
+      "name": "test_t2_8_progress_boundary_thresholds",
+      "doc": "T2.8: Strict boundary checks: 97.9% must NOT trigger, 98.0% MUST trigger.",
+      "status": "PASS",
+      "duration_ms": 0.04,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier2_boundary_corner.TestTier2BoundaryCorner.test_t2_9_malformed_time_description_resilience",
+      "name": "test_t2_9_malformed_time_description_resilience",
+      "doc": "T2.9: Malformed time strings and null inputs must return None without raising uncaught exceptions.",
+      "status": "PASS",
+      "duration_ms": 0.72,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier3_cross_feature.TestTier3CrossFeature.test_t3_1_comments_opened_at_95_percent_blocks_completion_scroll",
+      "name": "test_t3_1_comments_opened_at_95_percent_blocks_completion_scroll",
+      "doc": "T3.1: Comments drawer opened at 95% progress blocks auto-scroll even when video reaches >=98%.",
+      "status": "PASS",
+      "duration_ms": 0.26,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier3_cross_feature.TestTier3CrossFeature.test_t3_2_comments_closed_after_video_ended_resumes_next_cycle",
+      "name": "test_t3_2_comments_closed_after_video_ended_resumes_next_cycle",
+      "doc": "T3.2: Comments drawer closed after video reached end resumes auto-advance on next loop.",
+      "status": "PASS",
+      "duration_ms": 2.78,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier3_cross_feature.TestTier3CrossFeature.test_t3_3_manual_pause_at_99_percent_blocks_scroll",
+      "name": "test_t3_3_manual_pause_at_99_percent_blocks_scroll",
+      "doc": "T3.3: Manual pause engaged at 99% progress blocks auto-scroll.",
+      "status": "PASS",
+      "duration_ms": 0.2,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier3_cross_feature.TestTier3CrossFeature.test_t3_4_manual_resume_at_99_percent_scrolls_promptly",
+      "name": "test_t3_4_manual_resume_at_99_percent_scrolls_promptly",
+      "doc": "T3.4: Manual resume at 99% progress scrolls promptly upon playback resumption.",
+      "status": "PASS",
+      "duration_ms": 1.23,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier3_cross_feature.TestTier3CrossFeature.test_t3_5_navigating_immediately_after_manual_scroll",
+      "name": "test_t3_5_navigating_immediately_after_manual_scroll",
+      "doc": "T3.5: User manually scrolls to next Short; detector debounce holds to avoid duplicate auto-advance.",
+      "status": "PASS",
+      "duration_ms": 0.04,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier3_cross_feature.TestTier3CrossFeature.test_t3_6_dual_pause_state_handling",
+      "name": "test_t3_6_dual_pause_state_handling",
+      "doc": "T3.6: User pauses video AND opens comments drawer (dual pause), releases comments while still paused.",
+      "status": "PASS",
+      "duration_ms": 0.16,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier4_real_world.TestTier4RealWorldWorkloads.test_t4_1_three_consecutive_shorts_auto_advance",
+      "name": "test_t4_1_three_consecutive_shorts_auto_advance",
+      "doc": "T4.1: At least 3 consecutive YouTube Shorts of differing durations successfully auto-advance without user interaction.",
+      "status": "PASS",
+      "duration_ms": 5.74,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier4_real_world.TestTier4RealWorldWorkloads.test_t4_2_sub_300ms_transition_latency",
+      "name": "test_t4_2_sub_300ms_transition_latency",
+      "doc": "T4.2: Measurement of transition latency from >=98% completion to swipe injection (<300ms SLA).",
+      "status": "PASS",
+      "duration_ms": 2.6,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier4_real_world.TestTier4RealWorldWorkloads.test_t4_3_smart_pause_live_user_simulation",
+      "name": "test_t4_3_smart_pause_live_user_simulation",
+      "doc": "T4.3: Smart Pause live user simulation: user opens comments on Short #2 for 10s+, closes it, auto-advance resumes.",
+      "status": "PASS",
+      "duration_ms": 0.72,
+      "error": null
+    },
+    {
+      "test": "e2e.suites.tier4_real_world.TestTier4RealWorldWorkloads.test_t4_4_device_health_and_zero_exceptions",
+      "name": "test_t4_4_device_health_and_zero_exceptions",
+      "doc": "T4.4: Device health verification: continuous logcat check during playback showing zero exceptions or crash loops.",
+      "status": "PASS",
+      "duration_ms": 1.88,
+      "error": null
+    }
+  ]
+}
