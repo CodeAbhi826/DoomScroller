@@ -288,9 +288,8 @@ class TestAdversarialChallenger2(unittest.TestCase):
                 exclusion_boundary_y = screen_height - exclusion_px
                 margin_px = exclusion_boundary_y - start_y
 
-                self.assertGreater(
+                self.assertTrue(
                     start_y < exclusion_boundary_y,
-                    True,
                     f"start_y ({start_y}) must be strictly above bottom exclusion boundary ({exclusion_boundary_y}) at density {density}"
                 )
                 self.assertGreater(
@@ -494,6 +493,78 @@ class TestAdversarialChallenger2(unittest.TestCase):
     # -------------------------------------------------------------
     # Task 3: Latency calculation & Transition SLA (<300ms)
     # -------------------------------------------------------------
+
+    def test_smart_pause_at_99_percent_progress(self):
+        """Task 2.6: Comments drawer opened when video is at 99% progress - must NOT trigger scroll."""
+        detector = SimulatedShortsProgressDetector()
+        res = detector.should_trigger_scroll(
+            now_ms=5000,
+            comments_open=True,
+            time_desc="0 minutes 59 seconds of 1 minute 00 seconds"  # 98.3%
+        )
+        self.assertFalse(res, "Auto-scroll triggered at 99% progress even though comments drawer was open!")
+        self.assertEqual(len(detector.trigger_events), 0)
+
+    def test_manual_pause_at_99_percent_progress(self):
+        """Task 2.7: Manual pause when video is at 99% progress - must NOT trigger scroll."""
+        detector = SimulatedShortsProgressDetector()
+        res = detector.should_trigger_scroll(
+            now_ms=5000,
+            video_paused=True,
+            time_desc="0 minutes 59 seconds of 1 minute 00 seconds"  # 98.3%
+        )
+        self.assertFalse(res, "Auto-scroll triggered at 99% progress even though video was paused by user!")
+        self.assertEqual(len(detector.trigger_events), 0)
+
+    def test_short_clip_uneven_duration_wraparound(self):
+        """Task 2.8: 5s short clip wraparound (80% -> 5%) triggers auto-advance without watchdog."""
+        detector = SimulatedShortsProgressDetector()
+        # Tick 1: 4s / 5s = 80%
+        detector.should_trigger_scroll(now_ms=4000, time_desc="4 seconds of 5 seconds")
+        self.assertEqual(detector.last_observed_progress, 0.80)
+        # Tick 2: Wraparound to 0.25s / 5s = 5%
+        res = detector.should_trigger_scroll(now_ms=5000, time_desc="0.25 seconds of 5 seconds")
+        self.assertTrue(res, "5s short clip wraparound (80% -> 5%) must trigger auto-advance")
+        self.assertEqual(len(detector.trigger_events), 1)
+
+    def test_loop_count_required_adversarial_vulnerability(self):
+        """Task 2.9: Adversarial analysis of loopCountRequired > 1 state machine.
+        Demonstrates that if loopCountRequired > 1, consecutive ticks at >= 98% or wraparound
+        rapidly increment currentLoopCount within the same video loop due to missing edge-trigger latch.
+        """
+        detector = SimulatedShortsProgressDetector(loop_count_required=2)
+        # Tick 1 at 98.2%: loop count increments 0 -> 1
+        res1 = detector.should_trigger_scroll(now_ms=1000, time_desc="59 seconds of 60 seconds")
+        self.assertFalse(res1, "Tick 1: currentLoopCount is 1, required is 2")
+        self.assertEqual(detector.current_loop_count, 1)
+
+        # Tick 2 (250ms later, still on loop 1 at 99%):
+        # Because detector lacks an edge-trigger latch, this tick also increments currentLoopCount 1 -> 2!
+        res2 = detector.should_trigger_scroll(now_ms=1250, time_desc="59.5 seconds of 60 seconds")
+        self.assertTrue(
+            res2,
+            "ADVERSARIAL VULNERABILITY CONFIRMED: currentLoopCount incremented on consecutive >=98% ticks without edge latch"
+        )
+
+    def test_rapid_comments_drawer_toggling(self):
+        """Task 2.10: Rapid opening and closing of comments drawer does not corrupt watchdog."""
+        detector = SimulatedShortsProgressDetector(fallback_timeout_seconds=65)
+        # Video starts at t=0
+        detector.should_trigger_scroll(0, has_time_bar=False)
+
+        # User rapidly taps comments button 10 times over 5 seconds
+        for i in range(10):
+            t = 1000 + i * 500
+            # Open
+            detector.should_trigger_scroll(t, comments_open=True, has_time_bar=False)
+            # Close
+            detector.should_trigger_scroll(t + 250, comments_open=False, has_time_bar=False)
+
+        # At t=10s, verify watchdog has not triggered
+        self.assertEqual(len(detector.trigger_events), 0)
+        # Elapsed time from last close (t=5.75s) to t=10s is ~4.25s << 65s
+        res = detector.should_trigger_scroll(10000, comments_open=False, has_time_bar=False)
+        self.assertFalse(res)
 
     def test_detector_execution_latency(self):
         """Task 3.1: Measure detector parsing & decision latency over 10,000 iterations."""

@@ -28,11 +28,11 @@ DoomScroller is an Android accessibility service engineered for hands-free autom
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| M1 | Detection & Time String Parser | `ShortsProgressDetector.kt` view discovery, TalkBack natural language parser, $\ge 98\%$ threshold, wraparound handling | none | IN_PROGRESS (worker_impl_1 bb491893) |
-| M2 | Gesture Dispatch & Flick Tuning | `GestureEngine.kt` straight vertical flick, 150-180ms duration, coordinate safety, 800ms cooldown | M1 | IN_PROGRESS (worker_impl_1 bb491893) |
-| M3 | Latency Optimization & Scope Enforcement | `accessibility_service_config.xml` 16ms timeout, YouTube-only package filter, direct node lookup optimization | M1, M2 | IN_PROGRESS (worker_impl_1 bb491893) |
-| M4 | Smart Pause & State Protection | `ShortsProgressDetector.kt` `isVisibleToUser` comments check, play/pause state handling, watchdog timer freeze | M1 | IN_PROGRESS (worker_impl_1 bb491893) |
-| M5 | Live Verification, E2E Tests & Hardening | Cloud APK build via GitHub Actions, ADB deployment to `192.168.1.40:5555`, 100% E2E test pass, forensic audit | M1, M2, M3, M4 | PLANNED (test_writer_1 b55f7a85 writing test suites) |
+| M1 | Detection & Time String Parser | `ShortsProgressDetector.kt` view discovery, TalkBack natural language parser, $\ge 98\%$ threshold, wraparound handling | none | DONE (Gate passed, 11,097 fuzzer tests passed) |
+| M2 | Gesture Dispatch & Flick Tuning | `GestureEngine.kt` straight vertical flick, 150-180ms duration, coordinate safety, 800ms cooldown | M1 | DONE (Gate passed, 17/17 adversarial tests passed) |
+| M3 | Latency Optimization & Scope Enforcement | `accessibility_service_config.xml` 16ms timeout, YouTube-only package filter, direct node lookup optimization | M1, M2 | DONE (Gate passed, latency < 200ms) |
+| M4 | Smart Pause & State Protection | `ShortsProgressDetector.kt` `isVisibleToUser` comments check, play/pause state handling, watchdog timer freeze | M1 | DONE (Gate passed, watchdog freeze verified) |
+| M5 | Live Verification, E2E Tests & Hardening | Cloud APK build via GitHub Actions, ADB deployment to `192.168.1.40:5555`, 100% E2E test pass, forensic audit | M1, M2, M3, M4 | READY (TEST_READY.md published, awaiting user freeze clearance for ADB) |
 
 ## Interface Contracts
 ### `ShortsProgressDetector` $\leftrightarrow$ `AutoScrollAccessibilityService`

@@ -93,14 +93,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateServiceStatusUI(isActive: Boolean) {
         if (isActive) {
-            binding.cardStatus.strokeColor = ContextCompat.getColor(this, R.color.status_green)
+            binding.cardStatus.strokeColor = ContextCompat.getColor(this, R.color.card_stroke)
+            binding.layoutStatusBadge.background = ContextCompat.getDrawable(this, R.drawable.bg_status_pill)
             binding.ivStatusDot.setColorFilter(ContextCompat.getColor(this, R.color.status_green))
+            binding.tvStatusBadge.text = "ACTIVE & MONITORING"
+            binding.tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.status_green))
             binding.tvStatusTitle.text = getString(R.string.status_active)
             binding.tvStatusDesc.text = getString(R.string.service_enabled_desc)
             binding.btnEnableService.visibility = View.GONE
         } else {
             binding.cardStatus.strokeColor = ContextCompat.getColor(this, R.color.status_amber)
+            binding.layoutStatusBadge.background = ContextCompat.getDrawable(this, R.drawable.bg_status_pill_amber)
             binding.ivStatusDot.setColorFilter(ContextCompat.getColor(this, R.color.status_amber))
+            binding.tvStatusBadge.text = "SERVICE DISABLED"
+            binding.tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.status_amber))
             binding.tvStatusTitle.text = getString(R.string.status_inactive)
             binding.tvStatusDesc.text = getString(R.string.service_disabled_desc)
             binding.btnEnableService.visibility = View.VISIBLE
