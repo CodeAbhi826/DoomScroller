@@ -38,6 +38,9 @@ class ShortsProgressDetector(private val preferences: AppPreferences) {
             return false
         }
 
+        // Auto-dismiss YouTube's annoying "Accessibility Player" overlay if it pops up
+        dismissAccessibilityControlsOverlayIfPresent(rootNode)
+
         // 2. Check if comments or bottom drawers are visible
         isCommentsOpen = checkCommentsDrawerOpen(rootNode, packageName)
         if (preferences.pauseOnComments && isCommentsOpen) {
@@ -119,6 +122,36 @@ class ShortsProgressDetector(private val preferences: AppPreferences) {
         if (!playerMatches.isNullOrEmpty()) return true
 
         return false
+    }
+
+    private fun dismissAccessibilityControlsOverlayIfPresent(root: AccessibilityNodeInfo) {
+        val closeIds = listOf(
+            "com.google.android.youtube:id/player_overlay_close_button",
+            "com.google.android.youtube:id/close_button"
+        )
+        for (id in closeIds) {
+            val closeButtons = root.findAccessibilityNodeInfosByViewId(id)
+            if (!closeButtons.isNullOrEmpty()) {
+                for (btn in closeButtons) {
+                    if (btn.isVisibleToUser) {
+                        btn.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                        Log.d(tag, "Auto-dismissed YouTube Accessibility Player overlay button")
+                        return
+                    }
+                }
+            }
+        }
+
+        val hideTextNodes = root.findAccessibilityNodeInfosByText("Hide controls")
+        if (!hideTextNodes.isNullOrEmpty()) {
+            for (node in hideTextNodes) {
+                if (node.isVisibleToUser) {
+                    node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                    Log.d(tag, "Auto-dismissed YouTube controls overlay via 'Hide controls'")
+                    return
+                }
+            }
+        }
     }
 
     private fun checkCommentsDrawerOpen(root: AccessibilityNodeInfo, packageName: String): Boolean {
