@@ -7,7 +7,7 @@
     <string name="status_inactive">Accessibility Service Disabled</string>
     <string name="enable_service_btn">Enable Accessibility Service</string>
     <string name="service_enabled_desc">DoomScroller is watching YouTube Shorts and will automatically advance to the next video when playback ends.</string>
-    <string name="service_paused_desc">Auto-scroll is paused. Toggle 'Auto-Advance Shorts' back on to resume hands-free scrolling.</string>
+    <string name="service_paused_desc">Auto-scroll is paused. Toggle \"Auto-Advance Shorts\" back on to resume hands-free scrolling.</string>
     <string name="service_disabled_desc">Please enable DoomScroller under Accessibility Services so it can detect video endings and perform the next-video swipe gesture.</string>
     <string name="settings_section_title">Preferences</string>
     <string name="toggle_auto_scroll">Auto-Scroll Enabled</string>
