@@ -1,0 +1,14 @@
+<resources>
+    <color name="primary">#FF0033</color>
+    <color name="primary_dark">#CC0029</color>
+    <color name="accent">#00E5FF</color>
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="surface_variant">#2A2A2A</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0B0</color>
+    <color name="status_green">#00E676</color>
+    <color name="status_green_bg">#1A00E676</color>
+    <color name="status_amber">#FFB300</color>
+    <color name="status_amber_bg">#1AFFB300</color>
+</resources>

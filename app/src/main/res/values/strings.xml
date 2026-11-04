@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">DoomScroller</string>
+    <string name="accessibility_service_name">DoomScroller Auto-Scroll Service</string>
+    <string name="accessibility_service_description">Automatically advances YouTube Shorts (and reels) to the next video when playback finishes, hands-free.</string>
+    <string name="status_active">Auto-Scroller Active</string>
+    <string name="status_inactive">Accessibility Service Disabled</string>
+    <string name="enable_service_btn">Enable Accessibility Service</string>
+    <string name="service_enabled_desc">DoomScroller is actively watching YouTube Shorts and will automatically scroll to the next video when playback ends.</string>
+    <string name="service_disabled_desc">Please enable DoomScroller under Accessibility Services so it can detect video endings and perform the next-video swipe gesture.</string>
+    <string name="settings_section_title">Preferences</string>
+    <string name="toggle_auto_scroll">Auto-Scroll Enabled</string>
+    <string name="toggle_auto_scroll_desc">Automatically swipe up when short ends</string>
+    <string name="toggle_pause_comments">Pause on Comments</string>
+    <string name="toggle_pause_comments_desc">Do not scroll while the comment drawer is open</string>
+    <string name="loop_count_title">Watch Count</string>
+    <string name="loop_count_desc">Advance after playing 1 time (or replay once)</string>
+    <string name="battery_opt_title">Battery Optimization</string>
+    <string name="battery_opt_desc">Exclude DoomScroller from background killing</string>
+    <string name="battery_opt_btn">Disable Battery Restrictions</string>
+    <string name="open_youtube_btn">Open YouTube Shorts</string>
+    <string name="supported_apps_title">Supported Platforms</string>
+</resources>
